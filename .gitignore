@@ -2,6 +2,7 @@
 !.gitignore
 *~
 *.out
+*.o
 
 # Rust
 debug/
