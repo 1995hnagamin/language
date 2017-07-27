@@ -2,26 +2,21 @@
   <zeroOrMore>
     <element name="card">
       <choice>
+        <element name="name">
+          <text />
+        </element>
         <attribute name="name">
           <text />
         </attribute>
-          <group>
-            <attribute name="givenName">
-              <text />
-            </attribute>
-            <attribute name="familyName">
-              <text />
-            </attribute>
-          </group>
       </choice>
-      <attribute name="email">
-        <text />
-      </attribute>
-      <optional>
-        <attribute name="note">
+      <choice>
+        <element name="email">
+          <text />
+        </element>
+        <attribute name="email">
           <text />
         </attribute>
-      </optional>
+      </choice>
     </element>
   </zeroOrMore>
 </element>
