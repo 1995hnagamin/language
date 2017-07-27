@@ -1,9 +1,19 @@
 <element name="addressBook" xmlns="http://relaxng.org/ns/structure/0.9">
   <zeroOrMore>
     <element name="card">
-      <element name="name">
-        <text />
-      </element>
+      <choice>
+        <element name="name">
+          <text />
+        </element>
+        <group>
+          <element name="givenName">
+            <text />
+          </element>
+          <element name="familyName">
+            <text />
+          </element>
+        </group>
+      </choice>
       <element name="email">
         <text />
       </element>
