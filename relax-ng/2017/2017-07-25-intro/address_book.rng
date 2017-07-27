@@ -2,8 +2,16 @@
   <zeroOrMore>
     <element name="card">
       <element name="name">
-        <text></text>
+        <text />
       </element>
+      <element name="email">
+        <text />
+      </element>
+      <optional>
+        <element name="note">
+          <text />
+        </element>
+      </optional>
     </element>
   </zeroOrMore>
 </element>
