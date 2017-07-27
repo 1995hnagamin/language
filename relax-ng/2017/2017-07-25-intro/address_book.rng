@@ -5,17 +5,13 @@
         <element name="name">
           <text />
         </element>
-        <attribute name="name">
-          <text />
-        </attribute>
+        <attribute name="name" />
       </choice>
       <choice>
         <element name="email">
           <text />
         </element>
-        <attribute name="email">
-          <text />
-        </attribute>
+        <attribute name="email" />
       </choice>
     </element>
   </zeroOrMore>
