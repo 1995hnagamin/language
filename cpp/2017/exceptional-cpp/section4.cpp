@@ -6,6 +6,13 @@ class fixed_vector {
   typedef T*        iterator;
   typedef T const*  const_iterator;
 
+  fixed_vector(const fixed_vector &other) {
+    copy(other);
+  }
+  fixed_vector &operator=(const fixed_vector &rhs) {
+    copy(rhs);
+    return *this;
+  }
   iterator begin() {
     return v_;
   }
@@ -21,6 +28,13 @@ class fixed_vector {
 
   private:
   T v_[size];
+
+  void copy(fixed_vector const &other) {
+    iterator dst = begin();
+    for (const_iterator src = other.cbegin(); src != other.cend(); ++src, ++dst) {
+      *dst = *src;
+    }
+  }
 };
 
 int main() {
