@@ -1,0 +1,15 @@
+<grammar>
+  <start />
+  <define name="Card">
+    <element name="card">
+      <attribute name="name" />
+      <attribute name="email" />
+      <attribute name="preferredFormat">
+        <choice>
+          <value>html</value>
+          <value>text</value>
+        </choice>
+      </attribute>
+    </element>
+  </define>
+</grammar>
