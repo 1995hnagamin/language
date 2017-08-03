@@ -1,5 +1,8 @@
 #include <cassert>
+#include <iostream>
 #include <string>
+#include <tuple>
+#include <vector>
 
 int memicmp(char const *s1, char const *s2, size_t const n) {
   assert(s1 && s2);
@@ -13,7 +16,7 @@ int memicmp(char const *s1, char const *s2, size_t const n) {
   if ((*s1 || *s2) && i < n) {
     return (*s2) ? -1 : 1;
   }
-    return 0;
+  return 0;
 }
 
 struct ci_char_traits : public std::char_traits<char> {
@@ -37,6 +40,22 @@ struct ci_char_traits : public std::char_traits<char> {
 
 typedef std::basic_string<char, ci_char_traits> ci_string;
 
+bool same_sign(int x, int y) {
+  return ((x ^ y) >= 0);
+}
+
+void test_memicmp(char const *s1, char const *s2, size_t size, int answer) {
+  if (!same_sign(memicmp(s1, s2, size), answer)) {
+    std::cout
+    << "!!! "
+    << s1
+    << (answer == 0 ? " == " : (answer > 0 ? " > " : " < "))
+    << s2
+    << std::endl;
+  std::abort();
+  }
+}
+
 int main() {
   ci_string s("AbCdE");
   assert(s == "ABCDE");
@@ -45,5 +64,26 @@ int main() {
   assert("AbCdEf" > s);
   assert(s > "");
   assert("" < s);
+  assert(ci_string("") == ci_string(""));
+
+  std::vector<std::tuple<char const*, char const*, size_t, int>> const testcases = {
+    std::make_tuple("typedef", "toupper", 1, 0),
+    std::make_tuple("", "", 0, 0),
+    std::make_tuple("", "", 10, 0),
+    std::make_tuple("typedef", "toupper", 1, 0),
+    std::make_tuple("assert", "typedef", 0, 0),
+    std::make_tuple("which", "WHICH", 4, 0),
+    std::make_tuple("when", "whenever", 5, -1),
+    std::make_tuple("", "s", 5, -1),
+  };
+  for (auto&& testcase : testcases) {
+    char const *s1;
+    char const *s2;
+    size_t size;
+    int answer;
+    std::tie(s1, s2, size, answer) = testcase;
+    test_memicmp(s1, s2, size, answer);
+    test_memicmp(s2, s1, size, -answer);
+  }
   return 0;
 }
