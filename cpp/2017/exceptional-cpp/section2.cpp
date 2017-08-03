@@ -56,7 +56,7 @@ void test_memicmp(char const *s1, char const *s2, size_t size, int answer) {
   }
 }
 
-int main() {
+void section2() {
   ci_string s("AbCdE");
   assert(s == "ABCDE");
   assert(s == "abcde");
@@ -85,5 +85,19 @@ int main() {
     test_memicmp(s1, s2, size, answer);
     test_memicmp(s2, s1, size, -answer);
   }
+}
+
+void section3() {
+  ci_string s = "abc";
+  std::cout << s.c_str() << std::endl;
+
+  std::string a = "aaa";
+  ci_string b = "bbb";
+  std::string c = a + b.c_str();
+}
+
+int main() {
+  section2();
+  section3();
   return 0;
 }
