@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <list>
 #include <string>
 
@@ -13,16 +14,12 @@ bool operator==(Employee const &emp, std::string const &str) {
 std::string FindAddr(
   const std::list<Employee> &emps,
   const std::string &name) {
-std::list<Employee>::const_iterator end(emps.end());
-for ( std::list<Employee>::const_iterator i = emps.cbegin();
-      i != end;
-      ++i)
-{
-  if (i->name == name) {
+  std::list<Employee>::const_iterator const i(
+    std::find(emps.begin(), emps.end(), name));
+  if (i != emps.end()) {
     return i->addr;
   }
-}
-return "";
+  return "";
 }
 
 int main() {
