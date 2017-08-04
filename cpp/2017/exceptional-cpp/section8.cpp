@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
+#include <stdexcept>
 #include <string>
 
 template <class T>
@@ -44,6 +45,30 @@ class Stack {
         vused_ = rhs.vused_;
       }
       return *this;
+    }
+    size_t Count() const {
+      return vused_;
+    }
+    void Push(T const &item) {
+      if (vused_ < vsize_) {
+        v_[vused_] = item;
+        ++vused_;
+        return;
+      }
+      size_t const vsize_new = vsize_ * 2 + 1;
+      T *v_new = NewCopy(v_, vused_, vsize_new);
+      v_new[vused_] = item;
+      delete[] v_;
+      v_ = v_new;
+      vsize_ = vsize_new;
+      ++vused_;
+    }
+    T Pop() {
+      if (!vused_) {
+        throw std::domain_error("Pop empty stack");
+      }
+      --vused_;
+      return v_[vused_ - 1];
     }
 
   private:
