@@ -10,16 +10,19 @@ bool operator==(Employee const &emp, std::string const &str) {
   return emp.name == str;
 }
 
-std::string FindAddr(std::list<Employee> emps, std::string name) { // const&
-  for ( std::list<Employee>::iterator i = emps.begin();
-        i != emps.end(); // emps.end() ?
-        i++) // ++i
-  {
-    if (*i == name) {
-      return i->addr;
-    }
+std::string FindAddr(
+  const std::list<Employee> &emps,
+  const std::string &name) {
+std::list<Employee>::const_iterator end(emps.end());
+for ( std::list<Employee>::const_iterator i = emps.cbegin();
+      i != end;
+      ++i)
+{
+  if (i->name == name) {
+    return i->addr;
   }
-  return "";
+}
+return "";
 }
 
 int main() {
