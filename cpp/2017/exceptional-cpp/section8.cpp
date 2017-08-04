@@ -58,6 +58,9 @@ class Stack {
         vsize_ = vsize_new;
       }
       v_[vused_] = item;
+        // ここで失敗するかもしれないが、
+        // その場合ただ領域が大きくなるだけで
+        // 実害はない
       ++vused_;
     }
     T Pop() {
