@@ -81,6 +81,9 @@ class Stack {
       }
       return v_[vused_ - 1];
     }
+    bool Empty() const {
+      return (vused_ == 0);
+    }
 
   private:
     static size_t const initial_stack_size = 10;
