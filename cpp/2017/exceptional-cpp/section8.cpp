@@ -50,17 +50,14 @@ class Stack {
       return vused_;
     }
     void Push(T const &item) {
-      if (vused_ < vsize_) {
-        v_[vused_] = item;
-        ++vused_;
-        return;
+      if (vused_ == vsize_) {
+        size_t const vsize_new = vsize_ * 2 + 1;
+        T *v_new = NewCopy(v_, vused_, vsize_new);
+        delete[] v_;
+        v_ = v_new;
+        vsize_ = vsize_new;
       }
-      size_t const vsize_new = vsize_ * 2 + 1;
-      T *v_new = NewCopy(v_, vused_, vsize_new);
-      v_new[vused_] = item;
-      delete[] v_;
-      v_ = v_new;
-      vsize_ = vsize_new;
+      v_[vused_] = item;
       ++vused_;
     }
     T Pop() {
