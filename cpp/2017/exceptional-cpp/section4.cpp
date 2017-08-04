@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstdlib>
+#include <iostream>
 
 template<typename T, size_t size>
 class fixed_vector {
@@ -7,23 +8,35 @@ class fixed_vector {
   typedef T*        iterator;
   typedef T const*  const_iterator;
 
-  fixed_vector() = default;
+  fixed_vector()
+    : v_(new T[size])
+  {
+    std::cout << "#1" << std::endl;
+  }
+  ~fixed_vector() {
+    delete[] v_;
+  }
   template<typename O, size_t osize>
-  fixed_vector(const fixed_vector<O, osize> &other) {
+  fixed_vector(const fixed_vector<O, osize> &other)
+    : v_(new T[size])
+  {
+    std::cout << "#2" << std::endl;
     std::copy(
       other.cbegin(),
       other.cbegin() + std::min(size, osize),
       begin());
   }
+  void Swap(fixed_vector &other) noexcept {
+    using std::swap;
+    swap(v_, other.v_);
+  }
   template<typename O, size_t osize>
   fixed_vector<T, size>&
   operator=(const fixed_vector<O, osize> &rhs) {
-    std::copy(
-      rhs.cbegin(),
-      rhs.cbegin() + std::min(size, osize),
-      begin());
+    fixed_vector<T, size> temp(rhs);
+    Swap(temp);
     return *this;
-  }  
+  }
   iterator begin() {
     return v_;
   }
@@ -38,7 +51,7 @@ class fixed_vector {
   }
 
   private:
-  T v_[size];
+  T *v_;
 };
 
 int main() {
