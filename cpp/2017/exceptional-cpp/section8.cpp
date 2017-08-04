@@ -4,8 +4,8 @@ template <class T>
 class Stack {
   public:
     Stack():
-      v_(nullptr),
-      vsize_(0),
+      v_(new T[initial_stack_size]),
+      vsize_(initial_stack_size),
       vused_(0)
     {}
     ~Stack() {
@@ -13,6 +13,7 @@ class Stack {
     }
 
   private:
+    static size_t const initial_stack_size = 10;
     T *v_;
     size_t vsize_;
     size_t vused_;
