@@ -1,5 +1,19 @@
 #include <algorithm>
+#include <cassert>
 #include <cstdlib>
+
+template <class T>
+T *NewCopy(T const *src, size_t srcsize, size_t dstsize) {
+  assert(dstsize >= srcsize);
+  T *dst = new T[dstsize];
+  try {
+    std::copy(src, src + dst, dst);
+  } catch (...) {
+    delete[] dst;
+    throw;
+  }
+  return dst;
+}
 
 template <class T>
 class Stack {
