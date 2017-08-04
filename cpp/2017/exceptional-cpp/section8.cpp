@@ -3,8 +3,14 @@
 template <class T>
 class Stack {
   public:
-    Stack();
-    ~Stack();
+    Stack():
+      v_(nullptr),
+      vsize_(0),
+      vused_(0)
+    {}
+    ~Stack() {
+      delete[] v_;
+    }
 
   private:
     T *v_;
