@@ -63,12 +63,11 @@ class Stack {
         // 実害はない
       ++vused_;
     }
-    T Pop() {
+    void Pop() {
       if (!vused_) {
         throw std::domain_error("Pop empty stack");
       }
       --vused_;
-      return v_[vused_ - 1];
     }
 
   private:
