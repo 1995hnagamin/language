@@ -69,6 +69,18 @@ class Stack {
       }
       --vused_;
     }
+    T &Top() {
+      if (!vused_) {
+        throw std::domain_error("Empty stack");
+      }
+      return v_[vused_ - 1];
+    }
+    T const &Top() const {
+      if (!vused_) {
+        throw std::domain_error("Empty stack");
+      }
+      return v_[vused_ - 1];
+    }
 
   private:
     static size_t const initial_stack_size = 10;
