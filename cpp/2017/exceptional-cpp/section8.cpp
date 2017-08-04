@@ -18,3 +18,6 @@ class Stack {
     size_t vsize_;
     size_t vused_;
 };
+
+int main() {
+}
