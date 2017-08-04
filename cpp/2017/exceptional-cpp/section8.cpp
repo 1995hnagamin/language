@@ -30,13 +30,13 @@ class Stack {
       delete[] v_;
     }
     Stack(Stack const &other):
-      v_(NewCopy(other.v_, other.vsize_, other.vsize_)),
+      v_(NewCopy(other.v_, other.vused_, other.vsize_)),
       vsize_(other.vsize_),
       vused_(other.vused_)
     {}
     Stack &operator=(Stack const &rhs) {
       if (this != &rhs) {
-        T *v_new = NewCopy(rhs.v_, rhs.vsize_, rhs.vsize_);
+        T *v_new = NewCopy(rhs.v_, rhs.vused_, rhs.vsize_);
           // may throw
         delete[] v_;
         v_ = v_new;
