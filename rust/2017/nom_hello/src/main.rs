@@ -20,7 +20,16 @@ named!(name_parser<&str>,
 fn main() {
     match name_parser("Hello, world!".as_bytes()) {
         IResult::Done(_, name) => println!("name = {}", name),
-        IResult::Error(error) => println!("Error: {:?}", error),
+        IResult::Error(error) => {
+            match error {
+                nom::Err::Position(kind, position) => {
+                    println!("Error: kind={}, position={}",
+                         kind.description(),
+                         std::str::from_utf8(position).unwrap())
+                }
+                _ => println!("Error: {:?}", error),
+            }
+        }
         IResult::Incomplete(needed) => println!("Incomplete: {:?}", needed),
     }
 }
