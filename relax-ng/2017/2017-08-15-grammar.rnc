@@ -1,0 +1,9 @@
+grammar {
+  start =
+    element addressBook {
+      element card { cardContent }*
+    }
+  cardContent =
+    element name { text },
+    element email { text }
+}
