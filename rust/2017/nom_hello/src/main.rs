@@ -24,3 +24,11 @@ fn main() {
         IResult::Incomplete(needed) => println!("Incomplete: {:?}", needed),
     }
 }
+
+#[test]
+fn test_name_parser() {
+    let empty = &b""[..];
+    assert_eq!(name_parser("Hello, Rust!".as_bytes()), IResult::Done(empty, "Rust"));
+    let remain = &b" How are you."[..];
+    assert_eq!(name_parser("Hello, nom! How are you.".as_bytes()), IResult::Done(remain, "nom"));
+}
