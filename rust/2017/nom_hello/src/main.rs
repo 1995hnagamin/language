@@ -17,6 +17,18 @@ named!(name_parser<&str>,
     )
 );
 
+named!(japanese_name_parser<&str>,
+       chain!(
+           name: map_res!(
+               take_until!("さん、"),
+               std::str::from_utf8
+            ) ~
+           tag!("さん、こんにちは。"),
+
+           || name
+    )
+);
+
 fn main() {
     match name_parser("Hello, ラスト!".as_bytes()) {
         IResult::Done(_, name) => println!("name = {}", name),
