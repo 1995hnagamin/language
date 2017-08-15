@@ -1,14 +1,14 @@
 #[macro_use]
 extern crate nom;
 
-use nom::{IResult, space, alpha};
+use nom::{IResult, space};
 
 named!(name_parser<&str>,
        chain!(
            tag!("Hello,") ~
            space? ~
            name: map_res!(
-               alpha,
+               is_not!("!"),
                std::str::from_utf8
             ) ~
            tag!("!"),
@@ -18,7 +18,7 @@ named!(name_parser<&str>,
 );
 
 fn main() {
-    match name_parser("Hello, world!".as_bytes()) {
+    match name_parser("Hello, ラスト!".as_bytes()) {
         IResult::Done(_, name) => println!("name = {}", name),
         IResult::Error(error) => {
             match error {
