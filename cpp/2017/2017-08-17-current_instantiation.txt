@@ -1,0 +1,26 @@
+A name refers to the current instantiation if it is
+    (1)
+    in the definition of    (1a.1) a class template,
+                            (1a.2) a nested class of a class template,
+                            (1a.3) a member of a class template,
+                         or (1a.4) a member of a nested class of a class template,
+    the injected-class-name of    (1b.1) the class template
+                               or (1b.2) nested class,
+
+    (2)
+    in the definition of    (2.1) a primary class template
+                         or (2.2) a member of a primary class template,
+    the name
+        of the class template
+        followed by
+            the template argument list of the primary template (as described below)
+                enclosed in <>
+    (or an equivalent template alias specialization),
+
+    (3)
+    in the definition of a nested class of a class template,
+    the name of the nested class referenced as a member of the current instantiation,
+
+ or (4)
+    in the definition of a partial specialization or a member of a partial specialization, the name of the class template followed by the template argument list of the partial specialization enclosed in <> (or an equivalent template alias specialization).
+    If the nth template parameter is a parameter pack, the nth template argument is a pack expansion whose pattern is the name of the parameter pack.
