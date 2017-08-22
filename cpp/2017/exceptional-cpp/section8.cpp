@@ -71,13 +71,16 @@ class Stack : private StackImpl<T> {
     Stack(size_t size = 0): StackImpl<T>(size) {
     }
     ~Stack() = default;
-    Stack(Stack const &other): StackImpl<T>(other.vsize_) {
-      std::copy(other.v_, other.v_ + other.vused_, this->v_);
+    Stack(Stack const &other): StackImpl<T>(other.vused_) {
+      while (this->vused_ < other.vused_) {
+        construct(this->v_ + this->vused_, other.v_[this->vused_]);
+        ++(this->vused_);
+      }
     }
     Stack &operator=(Stack const &rhs) {
-      StackImpl<T> stack_new(rhs.vsize_);
-      std::copy(rhs.v_, rhs.v_ + rhs.vused_, stack_new.v_);
-      this->Swap(stack_new);
+      Stack temp(rhs); // may throw exception
+      this->Swap(temp); // noexcept
+      return *this;
     }
     size_t Count() const {
       return this->vused_;
@@ -85,17 +88,23 @@ class Stack : private StackImpl<T> {
     void Push(T const &item) {
       if (this->vused_ == this->vsize_) {
         size_t const vsize_new = 2 * this->vsize_ + 1;
-        StackImpl<T> stack_new(vsize_new);
-        this->Swap(stack_new);
+        Stack temp(vsize_new);
+        while (temp.Count() < this->vused_) {
+          temp.Push(this->v_[temp.Count()]);
+        }
+        temp.Push(item);
+        this->Swap(temp);
+      } else {
+        construct(this->v_ + this->vused_, item);
+        ++(this->vused_);
       }
-      this->v_[this->vused_] = item;
-      ++(this->vused_);
     }
     void Pop() {
       if (this->vused_ == 0) {
         throw std::domain_error("empty error");
       }
-      destroy(this->v_ + this->used - 1);
+      --(this->vused_);
+      destroy(this->v_ + this->used);
     }
     T &Top() {
       if (this->vused_ == 0) {
