@@ -51,61 +51,63 @@ class StackImpl {
 };
 
 template <class T>
-class Stack : private StackImpl<T> {
+class Stack {
   public:
-    Stack(size_t size = 0): StackImpl<T>(size) {
+    Stack(size_t size = 0): impl_(size) {
     }
     ~Stack() = default;
-    Stack(Stack const &other): StackImpl<T>(other.vused_) {
-      while (this->vused_ < other.vused_) {
-        construct(this->v_ + this->vused_, other.v_[this->vused_]);
-        ++(this->vused_);
+    Stack(Stack const &other): impl_(other.impl_.vused_) {
+      while (impl_.vused_ < other.impl_.vused_) {
+        construct(impl_.v_ + impl_.vused_, other.impl_.v_[impl_.vused_]);
+        ++(impl_.vused_);
       }
     }
     Stack &operator=(Stack const &rhs) {
       Stack temp(rhs); // may throw exception
-      this->Swap(temp); // noexcept
+      impl_.Swap(temp.impl_); // noexcept
       return *this;
     }
     size_t Count() const {
-      return this->vused_;
+      return impl_.vused_;
     }
     void Push(T const &item) {
-      if (this->vused_ == this->vsize_) {
-        size_t const vsize_new = 2 * this->vsize_ + 1;
+      if (impl_.vused_ == impl_.vsize_) {
+        size_t const vsize_new = 2 * impl_.vsize_ + 1;
         Stack temp(vsize_new);
-        while (temp.Count() < this->vused_) {
-          temp.Push(this->v_[temp.Count()]);
+        while (temp.Count() < impl_.vused_) {
+          temp.Push(impl_.v_[temp.Count()]);
         }
         temp.Push(item);
-        this->Swap(temp);
+        impl_.Swap(temp);
       } else {
-        construct(this->v_ + this->vused_, item);
-        ++(this->vused_);
+        construct(impl_.v_ + impl_.vused_, item);
+        ++(impl_.vused_);
       }
     }
     void Pop() {
-      if (this->vused_ == 0) {
+      if (impl_.vused_ == 0) {
         throw std::domain_error("empty error");
       }
-      --(this->vused_);
-      destroy(this->v_ + this->used);
+      --(impl_.vused_);
+      destroy(impl_.v_ + impl_.used);
     }
     T &Top() {
-      if (this->vused_ == 0) {
+      if (impl_.vused_ == 0) {
         throw std::domain_error("empty error");
       }
-      return this->v_[this->used_ - 1];
+      return impl_.v_[impl_.used_ - 1];
     }
     T const &Top() const {
-      if (this->vused_) {
+      if (impl_.vused_) {
         throw std::domain_error("empty error");
       }
-      return this->v_[this->vused_ - 1];
+      return impl_.v_[impl_.vused_ - 1];
     }
     bool Empty() const {
       return Count() == 0;
     }
+  private:
+    StackImpl<T> impl_;
 };
 
 int main() {
