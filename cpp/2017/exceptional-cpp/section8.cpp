@@ -21,11 +21,23 @@ T *NewCopy(T const *src, size_t srcsize, size_t dstsize) {
 
 template <class T>
 class StackImpl {
-    StackImpl(size_t size = 0);
-    ~StackImpl();
+  protected:
+    StackImpl(size_t size = 0):
+      v_(new T[size]),
+      vsize_(size),
+      vused_(size)
+    {}
+    ~StackImpl() {
+      delete[] v_;
+    }
     StackImpl(StackImpl const &) = delete;
     StackImpl &operator=(StackImpl const &) = delete;
-    void Swap(StackImpl &other) noexcept;
+    void Swap(StackImpl &other) noexcept {
+      using std::swap;
+      swap(v_, other.v_);
+      swap(vsize_, other.vsize_);
+      swap(vused_, other.vused_);
+    }
     T *v_;
     size_t vsize_;
     size_t vused_;
