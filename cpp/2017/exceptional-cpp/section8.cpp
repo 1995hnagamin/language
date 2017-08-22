@@ -23,21 +23,6 @@ void destroy(FwdIter first, FwdIter last) {
 }
 
 template <class T>
-T *NewCopy(T const *src, size_t srcsize, size_t dstsize) {
-  assert(dstsize >= srcsize);
-  T *dst = new T[dstsize];
-    // `operator new[]` may throw std::bad_alloc
-    // `T::T` may throw some exceptions
-  try {
-    std::copy(src, src + srcsize, dst);
-  } catch (...) {
-    delete[] dst; // don't throw exceptions
-    throw;
-  }
-  return dst;
-}
-
-template <class T>
 class StackImpl {
   protected:
     StackImpl(size_t size = 0):
