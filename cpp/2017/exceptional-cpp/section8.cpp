@@ -4,6 +4,24 @@
 #include <stdexcept>
 #include <string>
 
+template <class T1, class T2>
+void construct(T1 *p, T2 const &value) {
+  new (p) T1(value);
+}
+
+template <class T>
+void destroy(T *p) {
+  p->~T();
+}
+
+template <class FwdIter>
+void destroy(FwdIter first, FwdIter last) {
+  while (first != last) {
+    destroy(&*first);
+    ++first;
+  }
+}
+
 template <class T>
 T *NewCopy(T const *src, size_t srcsize, size_t dstsize) {
   assert(dstsize >= srcsize);
