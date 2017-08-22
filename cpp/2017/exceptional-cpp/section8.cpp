@@ -66,76 +66,52 @@ class StackImpl {
 };
 
 template <class T>
-class Stack {
+class Stack : private StackImpl<T> {
   public:
-    Stack():
-      v_(new T[initial_stack_size]),
-      vsize_(initial_stack_size),
-      vused_(0)
-    {}
-    ~Stack() {
-      delete[] v_;
+    Stack(size_t size = 0): StackImpl<T>(size) {
     }
-    Stack(Stack const &other):
-      v_(NewCopy(other.v_, other.vused_, other.vsize_)),
-      vsize_(other.vsize_),
-      vused_(other.vused_)
-    {}
+    ~Stack() = default;
+    Stack(Stack const &other): StackImpl<T>(other.vsize_) {
+      std::copy(other.v_, other.v_ + other.vused_, this->v_);
+    }
     Stack &operator=(Stack const &rhs) {
-      if (this != &rhs) {
-        T *v_new = NewCopy(rhs.v_, rhs.vused_, rhs.vsize_);
-          // may throw
-        delete[] v_;
-        v_ = v_new;
-        vsize_ = rhs.vsize_;
-        vused_ = rhs.vused_;
-      }
-      return *this;
+      StackImpl<T> stack_new(rhs.vsize_);
+      std::copy(rhs.v_, rhs.v_ + rhs.vused_, stack_new.v_);
+      this->Swap(stack_new);
     }
     size_t Count() const {
-      return vused_;
+      return this->vused_;
     }
     void Push(T const &item) {
-      if (vused_ == vsize_) {
-        size_t const vsize_new = vsize_ * 2 + 1;
-        T *v_new = NewCopy(v_, vused_, vsize_new);
-        delete[] v_;
-        v_ = v_new;
-        vsize_ = vsize_new;
+      if (this->vused_ == this->vsize_) {
+        size_t const vsize_new = 2 * this->vsize_ + 1;
+        StackImpl<T> stack_new(vsize_new);
+        this->Swap(stack_new);
       }
-      v_[vused_] = item;
-        // ここで失敗するかもしれないが、
-        // その場合ただ領域が大きくなるだけで
-        // 実害はない
-      ++vused_;
+      this->v_[this->vused_] = item;
+      ++(this->vused_);
     }
     void Pop() {
-      if (!vused_) {
-        throw std::domain_error("Pop empty stack");
+      if (this->vused_ == 0) {
+        throw std::domain_error("empty error");
       }
-      --vused_;
+      destroy(this->v_ + this->used - 1);
     }
     T &Top() {
-      if (!vused_) {
-        throw std::domain_error("Empty stack");
+      if (this->vused_ == 0) {
+        throw std::domain_error("empty error");
       }
-      return v_[vused_ - 1];
+      return this->v_[this->used_ - 1];
     }
     T const &Top() const {
-      if (!vused_) {
-        throw std::domain_error("Empty stack");
+      if (this->vused_) {
+        throw std::domain_error("empty error");
       }
-      return v_[vused_ - 1];
+      return this->v_[this->vused_ - 1];
     }
     bool Empty() const {
-      return (vused_ == 0);
+      return Count() == 0;
     }
-
-  private:
-    static size_t const initial_stack_size = 10;
-    T *v_;
-    size_t vsize_;
-    size_t vused_;
 };
 
 int main() {
