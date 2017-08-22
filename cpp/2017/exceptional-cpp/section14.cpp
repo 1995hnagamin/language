@@ -24,7 +24,7 @@ void destroy(FwdIter first, FwdIter last) {
 
 template <class T>
 class StackImpl {
-  protected:
+  public:
     StackImpl(size_t size = 0):
       v_(static_cast<T*>(
             size == 0 ?
