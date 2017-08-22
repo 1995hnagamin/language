@@ -20,6 +20,18 @@ T *NewCopy(T const *src, size_t srcsize, size_t dstsize) {
 }
 
 template <class T>
+class StackImpl {
+    StackImpl(size_t size = 0);
+    ~StackImpl();
+    StackImpl(StackImpl const &) = delete;
+    StackImpl &operator=(StackImpl const &) = delete;
+    void Swap(StackImpl &other) noexcept;
+    T *v_;
+    size_t vsize_;
+    size_t vused_;
+};
+
+template <class T>
 class Stack {
   public:
     Stack():
