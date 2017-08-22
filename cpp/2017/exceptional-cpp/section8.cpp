@@ -41,12 +41,16 @@ template <class T>
 class StackImpl {
   protected:
     StackImpl(size_t size = 0):
-      v_(new T[size]),
+      v_(static_cast<T*>(
+            size == 0 ?
+                nullptr
+              : operator new(sizeof(T) * size))),
       vsize_(size),
-      vused_(size)
+      vused_(0)
     {}
     ~StackImpl() {
-      delete[] v_;
+      destroy(v_, v_ + vused_); // do not throw exceptions
+      operator delete(v_);
     }
     StackImpl(StackImpl const &) = delete;
     StackImpl &operator=(StackImpl const &) = delete;
