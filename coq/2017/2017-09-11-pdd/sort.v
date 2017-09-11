@@ -71,4 +71,7 @@ Qed.
 Theorem isort_sorted : forall (l : list nat),
     LocallySorted le (insertion_sort l).
 Proof.
-Admitted.
+  intros. induction l.
+  - constructor.
+  - simpl. apply insert_sorted. apply IHl.
+Qed.
