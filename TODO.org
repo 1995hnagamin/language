@@ -1,7 +1,9 @@
 * Exceptional C++
 ** 3: クラスの設計と継承
-*** TODO #20
-*** TODO #21
+*** DONE #20
+    CLOSED: [2017-09-14 木 16:09]
+*** DONE #21
+    CLOSED: [2017-09-14 木 16:09]
 *** TODO #22
 *** TODO #23
 *** TODO #24
