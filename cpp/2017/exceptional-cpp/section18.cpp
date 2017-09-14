@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <string>
 
 using Money = int;
@@ -13,30 +14,11 @@ class Employee {
 };
 
 
-String /* j */ EvaluateSalaryAndReturnName(Employee e /* x */) {
-  /* a */
-  if (e.Title() /* b */ == "CEO" || e.Salary() /* c */ > 100000) {
-    std::cout
-      << e.First() /* d */ << " " << e.Last() /* e */ << "is overpaid"
-      << std::endl; /* f */
+std::unique_ptr<String> EvaluateSalaryAndReturnName(Employee e) {
+  std::unique_ptr<String> result(new String(e.First() + " " + e.Last()));
+  if (e.Title() == "CEO" || e.Salary() > 100000) {
+    String message = (*result) + " is overpaid\n";
+    std::cout << message;
   }
-  /* g */
-  return e.First() /* h */ + " " + e.Last() /* i */;
+  return result;
 }
-
-/*
- * x
- * x a b
- * x a b c
- * x a b c d
- * x a b c d e
- * x a b c d e f g h
- * x a b c d e f g h i
- * x a b c d e f g h i j
- * x a b d
- * x a b d e
- * x a b d e f
- * x a b d e f g h
- * x a b d e f g h i
- * x a b d e f g h i j
- */
