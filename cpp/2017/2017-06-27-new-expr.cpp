@@ -23,5 +23,7 @@ int main() {
   show(pi4, N);  delete[] pi4;    // default-initialization
 
   // int *pi5 = new int[N]({1, 2, 3}) - error
+
+  int *pi6 = new int[N];
   return 0;
 }
