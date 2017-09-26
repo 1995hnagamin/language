@@ -1,15 +1,15 @@
 #ifndef X_H
 #define X_H
 
-#include <iostream>
-#include <ostream>
+#include <iosfwd>
 #include <list>
 
 #include "a.h"
 #include "b.h"
 #include "c.h"
 #include "d.h"
-#include "e.h"
+
+class E;
 
 class X : public A, private B
 {
