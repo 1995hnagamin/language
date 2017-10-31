@@ -6,10 +6,10 @@
 
 #include "a.h"
 #include "b.h"
-#include "c.h"
-#include "d.h"
 
 class E;
+
+struct XImpl;
 
 class X : public A, private B
 {
@@ -21,8 +21,7 @@ class X : public A, private B
     E h(E);
     virtual std::ostream &print(std::ostream &) const;
   private:
-    std::list<C> clist_;
-    D d_;
+    struct XImpl *pimpl_;
 };
 
 inline std::ostream &operator<<(std::ostream &os, const X &x)
