@@ -1,0 +1,9 @@
+TranslationUnitDecl 0x4ce0e80 <<invalid sloc>> <invalid sloc>
+|-TypedefDecl 0x4ce13b8 <<invalid sloc>> <invalid sloc> implicit __int128_t '__int128'
+|-TypedefDecl 0x4ce1418 <<invalid sloc>> <invalid sloc> implicit __uint128_t 'unsigned __int128'
+|-TypedefDecl 0x4ce17f8 <<invalid sloc>> <invalid sloc> implicit __builtin_va_list '__va_list_tag [1]'
+`-CXXRecordDecl 0x4ce1848 <2017-09-18-member-name.cpp:1:1, line:5:1> line:1:7 class A definition
+  |-CXXRecordDecl 0x4ce1960 <col:1, col:7> col:7 implicit class A
+  |-AccessSpecDecl 0x4ce19f0 <line:2:3, col:9> col:3 public
+  |-FieldDecl 0x4ce1b08 <line:3:5, col:18> col:11 func1 'int (*)(void)'
+  `-CXXMethodDecl 0x4d2d330 <line:4:5, col:15> col:9 func2 'int (void)'
