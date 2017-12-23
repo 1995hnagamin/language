@@ -1,11 +1,7 @@
 import Data.IORef
 
+loop s i | i <= 100 = loop (s+i) (i+1)
+loop s _ = s
+
 main = do
-    s <- newIORef 0
-    let loop i | i <= 100 = do
-            sVal <- readIORef s
-            writeIORef s (sVal + i)
-            loop $ i + 1
-        loop _ = do
-            print =<< readIORef s
-    loop 1
+    print $ loop 0 1
