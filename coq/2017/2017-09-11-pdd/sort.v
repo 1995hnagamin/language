@@ -51,9 +51,27 @@ Proof.
     + apply LSorted_consn.
       apply H.
       apply leb_complete. congruence.
-    + Admitted.
+    + inversion H.
+      * simpl. subst. apply LSorted_consn.
+        apply LSorted_cons1.
+        apply lt_le_weak. apply leb_complete_conv. congruence.
+      * simpl. subst. simpl in IHt.
+        remember (leb a b).
+        {
+          destruct b0.
+          - apply LSorted_consn.
+            apply IHt. apply H2.
+            apply lt_le_weak. apply leb_complete_conv. congruence.
+          - apply LSorted_consn.
+            apply IHt. apply H2.
+            apply H3.
+        }
+Qed.
 
 Theorem isort_sorted : forall (l : list nat),
     LocallySorted le (insertion_sort l).
 Proof.
-Admitted.
+  intros. induction l.
+  - constructor.
+  - simpl. apply insert_sorted. apply IHl.
+Qed.
