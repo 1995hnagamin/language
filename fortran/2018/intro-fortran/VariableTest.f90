@@ -1,10 +1,10 @@
 program VariableTest
         implicit none
-        real(8) x
-        x = 1
-        print *, x
-        x = x/2 + 1/x
-        print *, x
-        x = x/2 + 1/x
-        print *, x
+        real(8) Harry
+        Harry = 1
+        print *, Harry
+        Harry = Harry/2 + 1/Harry
+        print *, Harry
+        Harry = Harry/2 + 1/Harry
+        print *, Harry
 end program VariableTest
