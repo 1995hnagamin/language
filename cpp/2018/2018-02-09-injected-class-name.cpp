@@ -5,3 +5,9 @@ class A {
     void func(const A &);
   };
 };
+
+template<>
+template<>
+void A<int>::B<int>::func(const A &) {
+  return;
+}
