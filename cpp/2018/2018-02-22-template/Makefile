@@ -9,4 +9,4 @@ app: $(OBJS)
 	$(CXX) -o app $(OBJS)
 
 clean:
-	rm -rf *.o
+	rm -rf *.o app
