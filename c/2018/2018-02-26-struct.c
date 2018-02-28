@@ -1,5 +1,4 @@
 struct A {
-	struct B;
 	struct B *ptr1;
 };
 
