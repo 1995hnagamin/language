@@ -3,7 +3,3 @@
 *~
 *.out
 *.o
-
-# Rust
-debug/
-Cargo.lock
