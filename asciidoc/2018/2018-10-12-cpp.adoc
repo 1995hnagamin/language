@@ -1,0 +1,7 @@
+= The cpp atribute =
+
+{cpp}
+
+C{plus}{plus}
+
+You can write `C++{plus}{plus}` as `+{cpp}+`.
