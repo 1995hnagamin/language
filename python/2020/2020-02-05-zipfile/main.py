@@ -1,4 +1,7 @@
+import glob
 import zipfile
 
 with zipfile.ZipFile('test.zip', 'w') as z:
-    z.write('dir')
+    for fname in glob.glob('dir/**', recursive=True):
+        print(fname)
+        z.write(fname)
