@@ -1,3 +1,6 @@
+*** Settings ***
+Resource    common.robot
+
 *** Keywords ***
 
 Check 1 + 1 equals to 2
