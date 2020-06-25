@@ -1,18 +1,25 @@
 ```
 ==============================================================================
-Example
+2020-06-25-Resource
 ==============================================================================
+2020-06-25-Resource.Example
+==============================================================================
+(Control)                                                             | PASS |
+------------------------------------------------------------------------------
 Check common.robot                                                    | FAIL |
-No keyword with name 'Check 99 + 1 equal to 100' found.
+No keyword with name 'Check 99 + 1 equal to 100' found. Did you mean:
+    Check 0 + 0 Equal To 0
 ------------------------------------------------------------------------------
 Check __init__.robot                                                  | FAIL |
-No keyword with name 'Check 1 + 1 equal to 2' found.
+No keyword with name 'Check 1 + 1 equal to 2' found. Did you mean:
+    Check 0 + 0 Equal To 0
 ------------------------------------------------------------------------------
-Example                                                               | FAIL |
-2 critical tests, 0 passed, 2 failed
-2 tests total, 0 passed, 2 failed
+2020-06-25-Resource.Example                                           | FAIL |
+3 critical tests, 1 passed, 2 failed
+3 tests total, 1 passed, 2 failed
 ==============================================================================
-Output:  /language/robotframework/2020/2020-06-25-resource/output.xml
-Log:     /language/robotframework/2020/2020-06-25-resource/log.html
-Report:  /language/robotframework/2020/2020-06-25-resource/report.html
+2020-06-25-Resource                                                   | FAIL |
+3 critical tests, 1 passed, 2 failed
+3 tests total, 1 passed, 2 failed
+==============================================================================
 ```
