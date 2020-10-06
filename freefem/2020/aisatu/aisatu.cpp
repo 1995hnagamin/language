@@ -1,7 +1,7 @@
 #include <ff++.hpp>
 #include <iostream>
 
-double supercalifragilisticexpialidocious_hello() {
+double print_hello() {
   std::cout << "Hello" << std::endl;
   return 0;
 }
@@ -10,6 +10,6 @@ static void init() {
   Global.Add(
       "sayhello",
       "(",
-      new OneOperator0<double>(supercalifragilisticexpialidocious_hello));
+      new OneOperator0<double>(print_hello));
 }
 LOADFUNC(init);
