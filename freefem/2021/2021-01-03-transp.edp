@@ -2,10 +2,10 @@ matrix<complex> A =
     [[0+1i, 0, 0],
      [0, 0+1i, 0],
      [0, 0, 0+1i]];
-complex[int] v = [1+0i, 2, 3];
-complex[int] w1 = A' * v;
-
 matrix<complex> B = A';
-complex[int] w2 = B * v;
 
-cout << w1 << w2 << endl;
+complex[int] v = [1+0i, 2, 3];
+complex[int] w1 = B * v;
+complex[int] w2 = A' * v;
+
+cout << w1 << endl << w2 << endl;
