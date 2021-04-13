@@ -1,3 +1,7 @@
 load "kwparm"
 
-aisatu(repeat=10);
+func real foo(string jam) {
+	cout << jam << endl;
+}
+
+aisatu(repeat=3);

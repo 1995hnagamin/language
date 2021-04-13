@@ -15,6 +15,13 @@ let filter_map f xs =
        | None -> ys)
     xs []
 
+let rev_filter_map f xs =
+  List.fold_left
+    (fun ys x ->
+       match f x with
+       | Some(y) -> y :: ys
+       | None -> ys)
+    [] xs
 
 type chr = string
 
@@ -33,22 +40,29 @@ end
 
 module SS = Set.Make(Chr)
 
-let fset_amend (set1, nul1) (set2, nul2) =
+let fstset_amend (set1, nul1) (set2, nul2) =
   (SS.union set1 set2, nul1 || nul2)
 
-let rec first_set gr = function
-    [] -> (SS.empty, true)
-  | Term(a) :: rest -> (SS.singleton a, false)
-  | Nont(x) :: rest ->
-    let rhss = filter_map (fun (v, rhs) -> if v = x then Some(rhs) else None) gr in
-    let (fstx, nullable) =
-      List.fold_left (fun fst rhs -> fset_amend fst (first_set gr rhs))
-        (SS.empty, false) rhss
-    in
-    if not nullable
-    then (fstx, nullable)
-    else
-      fset_amend (fstx, nullable) (first_set gr rest)
+let first_set gr =
+  let rec iter = function
+      [] -> (SS.empty, true)
+    | Term(a) :: rest -> (SS.singleton a, false)
+    | Nont(x) :: rest ->
+      let rhss =
+        rev_filter_map
+          (fun (v, rhs) -> if v = x then Some(rhs) else None)
+          gr
+      in
+      let fstx =
+        List.fold_left
+          (fun fst rhs -> fstset_amend fst (iter rhs))
+          (SS.empty, false) rhss
+      in
+      if snd fstx
+      then fstset_amend fstx (iter rest)
+      else fstx
+  in
+  iter
 
 let g1 = [
   "S", [Nont("A"); Nont("B")];
@@ -57,3 +71,10 @@ let g1 = [
   "B", [Term("b")];
   "B", []
 ]
+
+
+let () =
+  Printf.printf "First set of \"S\":\n";
+  let (s, b) = first_set g1 [Nont("S")] in
+  SS.iter (fun ch -> Printf.printf "- %s\n" ch) s;
+  Printf.printf "Follow set\n";

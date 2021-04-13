@@ -1,0 +1,8 @@
+macro Tensor(v, w) v * w.re' + 1i * v * w.im' //
+
+complex[int] v = [3+4i, 4];
+matrix<complex> A = [1,2] * conj(v');
+cout << A << endl;
+
+// matrix<complex> A = [1,2] * conj([3+4i, 4]);
+// cout << A << endl;

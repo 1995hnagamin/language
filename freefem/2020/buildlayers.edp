@@ -1,0 +1,26 @@
+load "iovtk"
+load "msh3"
+load "medit"
+
+real r = 1;
+border Circle (t = 0, 2*pi) {
+	x = r * cos(t);
+	y = r * sin(t);
+	label=1;
+}
+mesh Floor = buildmesh(Circle(10));
+// plot(Floor, wait=true);
+
+int[int] rup = [0, 1];
+int[int] rdown = [0, 2];
+int[int] rmid = [1, 3];
+
+mesh3 Th = buildlayers(
+	Floor, 3,
+	zbound=[0, 1],
+	labelup=rup,
+	labeldown=rdown,
+	labelmid=rmid
+);
+// medit("Th", Th);
+savevtk("buildlayers.vtk", Th);
