@@ -1,0 +1,15 @@
+mesh Th = square(10, 10);
+
+fespace Vh(Th, P2);
+Vh<complex> v, w;
+
+func f = 1601;
+
+solve prob(v, w)
+	= int2d(Th)( dx(v)*dx(w)+dy(v)*dy(w) )
+	+ int2d(Th)( f*w )
+	+ on(1,2,3,4, v=0);
+
+Vh rev = real(v);
+
+plot(rev, fill=true);
