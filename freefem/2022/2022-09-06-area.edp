@@ -1,15 +1,38 @@
+cout.precision(16);
+
+func int debug(mesh &Th) {
+	cout	<< "Nb of boundary elements: " << Th.nbe << ",\t"
+		<< "Nb of nodes: " << Th.nv << ",\t"
+		<< "Nb of triangles: " << Th.nt << ",\t"
+		<< "Area: " << Th.measure << "\n\n";
+	return 0;
+}
+
 real CircleRadius = 1.0;
 border Circle (t = 0, 2*pi) {
 	x = CircleRadius * cos(t);
 	y = CircleRadius * sin(t);
 }
 
-int MQ = 62;
+int MQ = 50;
 mesh Th = buildmesh(Circle(MQ));
 fespace Vh(Th, P0);
 
-Vh unit = 1.0;
+debug(Th);
+plot(Th, wait=true);
 
+func r = sqrt(x*x + y*y) / CircleRadius;
+func theta = atan2(y, x);
+
+for (int i = 0; i < 3; ++i) {
+	Vh f = exp(-pow(r, -3)) * sin(30*theta);
+	plot(f, fill=true, wait=true);
+	Th = adaptmesh(Th, f);
+	debug(Th);
+	plot(Th, wait=true);
+}
+
+
+func unit = 1;
 real S = int2d(Th)(unit);
-cout.precision(16);
 cout << S << endl;
