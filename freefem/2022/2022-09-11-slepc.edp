@@ -1,0 +1,3 @@
+verbosity = 100;
+
+load "SLEPc"
