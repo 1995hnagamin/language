@@ -1,0 +1,2 @@
+int t = ltime();
+cout << t << endl;
