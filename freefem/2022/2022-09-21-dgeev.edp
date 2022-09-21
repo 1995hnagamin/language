@@ -1,0 +1,17 @@
+load "lapack"
+
+int dim = 3;
+
+real[int,int] A = [
+	[2, 0, 0],
+	[0, 3, 4],
+	[0, 4, 9]
+];
+
+complex[int] ev(dim);
+complex[int, int] eV(dim, dim);
+dgeev(A, ev, eV);
+
+cout << ev << endl;
+
+cout << eV << endl;
