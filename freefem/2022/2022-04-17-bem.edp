@@ -1,0 +1,14 @@
+load "bem"
+
+real CircleRadiue = 1.0;
+border Circle (t = 0, 2*pi) {
+	x = CircleRadius * cos(t);
+	y = CircleRadius * sin(t);
+}
+int MQ = 10;
+meshL ThL = buildMeshL(Circle(MQ));
+fespace Uh(Th, P1);
+
+varf vbem(u, v)
+	= int1dx1d(ThL)(ThL)( BEM(BemKernel("SL", 0), u, v) );
+
