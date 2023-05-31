@@ -3,3 +3,7 @@
 *.cmx
 *.o
 *.opt
+
+# dune
+_build/
+_opam/
