@@ -1,0 +1,11 @@
+load "iovtk"
+
+mesh Th = square(20, 20, [2*x-1, 2*y-1]);
+fespace Vh(Th, P1);
+
+Vh u = y*abs(y)/sqrt(x*x+y*y+1e-10), v = -x*abs(x)/sqrt(x*x+y*y+1e-10);
+Vh zero = 0;
+
+plot([u, v]);
+int[int] order = [1];
+savevtk("fig.vtu", Th, [u, v, 0], dataname="uv", order=order);
